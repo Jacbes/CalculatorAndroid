@@ -6,14 +6,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.function.IntBinaryOperator;
 
 public class MainActivity extends AppCompatActivity {
 
     TextView numberTextView;
-    Integer firstNumber = 0;
-    Integer secondNumber = 0;
+    String firstNumber = "";
+    String secondNumber = "";
+    Integer result = 0;
     IntBinaryOperator operation = null;
 
     @Override
@@ -57,24 +59,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addNumberToTextView(String number) {
-        String numberToView = numberTextView.getText().toString() + number;
+        secondNumber = secondNumber + number;
 
-        numberTextView.setText(numberToView);
+        numberTextView.setText(secondNumber);
     }
 
     private void writeNumber(IntBinaryOperator operation) {
         this.operation = operation;
 
-        String inputNumber = numberTextView.getText().toString();
-        firstNumber = Integer.valueOf(inputNumber);
-
+        firstNumber = secondNumber;
+        secondNumber = "";
         numberTextView.setText("");
     }
 
     private void calculateOperation() {
-        String number = numberTextView.getText().toString();
-        secondNumber = Integer.valueOf(number);
-        Integer result = operation.applyAsInt(firstNumber, secondNumber);
+        if (operation != null) {
+            Log.i("Hello", firstNumber + " " + secondNumber);
+            try {
+                result = operation.applyAsInt(Integer.valueOf(firstNumber), Integer.valueOf(secondNumber));
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "Error to calculate", Toast.LENGTH_LONG)
+                        .show();
+            }
+            firstNumber = "";
+            secondNumber = "";
+            operation = null;
+        }
         numberTextView.setText(result.toString());
     }
 }
