@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'dev.jacbes.helloworld'
+    namespace 'dev.jacbes.calculatorandroid'
     compileSdk 32
 
     defaultConfig {
-        applicationId "dev.jacbes.helloworld"
+        applicationId "dev.jacbes.calculatorandroid"
         minSdk 21
         targetSdk 32
         versionCode 1

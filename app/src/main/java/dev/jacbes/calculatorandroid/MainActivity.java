@@ -1,4 +1,4 @@
-package dev.jacbes.helloworld;
+package dev.jacbes.calculatorandroid;
 
 import androidx.appcompat.app.AppCompatActivity;
 
