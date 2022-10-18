@@ -126,6 +126,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         clearNumbersAndOperation();
+
+        setSecondNumber(resultNumber);
     }
 
     private void clearNumbersAndOperation() {
