@@ -3,7 +3,6 @@ package dev.jacbes.calculatorandroid;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -74,17 +73,22 @@ public class MainActivity extends AppCompatActivity {
 
     private void calculateOperation() {
         if (operation != null) {
-            Log.i("Hello", firstNumber + " " + secondNumber);
             try {
-                result = operation.applyAsInt(Integer.valueOf(firstNumber), Integer.valueOf(secondNumber));
+                result = operation.applyAsInt(Integer.parseInt(firstNumber), Integer.parseInt(secondNumber));
+
+                numberTextView.setText(String.valueOf(result));
+            } catch (ArithmeticException e) {
+                if (secondNumber.equals("0")) {
+                    numberTextView.setText("∞");
+                }
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(), "Error to calculate", Toast.LENGTH_LONG)
                         .show();
             }
-            firstNumber = "";
-            secondNumber = "";
-            operation = null;
         }
-        numberTextView.setText(result.toString());
+
+        firstNumber = "";
+        secondNumber = "";
+        operation = null;
     }
 }
