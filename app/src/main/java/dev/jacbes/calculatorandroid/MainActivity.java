@@ -3,6 +3,7 @@ package dev.jacbes.calculatorandroid;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,51 +67,101 @@ public class MainActivity extends AppCompatActivity {
         eraseNumberButton.setOnClickListener(view -> eraseSecondNumber());
     }
 
+    /**
+     * Clear secondNumber if it is not empty
+     */
     private void eraseSecondNumber() {
         if (!secondNumber.isEmpty()) {
+            Log.i("CalcApp", "Erase secondNumber is not empty");
             setSecondNumber(secondNumber.substring(0, secondNumber.length() - 1));
             setResultTextView(secondNumber);
         }
     }
 
+    /**
+     * Set secondNumber of number value
+     *
+     * @param number
+     */
     private void setSecondNumber(String number) {
+        Log.i("CalcApp", "Set second number: " + number);
         secondNumber = number;
     }
 
+    /**
+     * Set value of number to textView
+     *
+     * @param number
+     */
     private void setResultTextView(String number) {
+        Log.i("CalcApp", "Set textview number: " + number);
         resultTextView.setText(number);
     }
 
+    /**
+     * Set concatenate dot with secondNumber
+     */
     private void setDotInSecondNumber() {
         if (!checkDotInSecondNumber()) {
+            Log.i("CalcApp", "Number contains dot");
             addToSecondNumber(".");
         }
     }
 
+    /**
+     * Check contains dot in second number
+     * return true if contains,
+     * else - false
+     *
+     * @return
+     */
     private boolean checkDotInSecondNumber() {
         return secondNumber.contains(".");
     }
 
+    /**
+     * Concatenate secondNumber and number
+     *
+     * @param number
+     */
     private void addToSecondNumber(String number) {
+        Log.i("CalcApp", "Press on button: " + number);
         secondNumber = secondNumber + number;
         setResultTextView(secondNumber);
     }
 
+    /**
+     * Set operation and clear textView
+     *
+     * @param operation
+     */
     private void setOperation(DoubleBinaryOperator operation) {
+        Log.i("CalcApp", "Choose operation");
         this.operation = operation;
 
         setFirstNumber(secondNumber);
         setResultTextView("");
     }
 
+    /**
+     * Set firstNumber value of secondNumber
+     * and clear secondNumber
+     *
+     * @param number
+     */
     private void setFirstNumber(String number) {
+        Log.i("CalcApp", "Save first number: " + number);
         firstNumber = number;
         secondNumber = "";
     }
 
+    /**
+     * Calculate operation with firstNumber and secondNumber
+     */
     private void launchOperation() {
         if (operation != null) {
             try {
+                Log.i("CalcApp", "Calculate: " + firstNumber + ", " + secondNumber);
                 Double resultOfOperation = operation
                         .applyAsDouble(
                                 Double.parseDouble(firstNumber),
@@ -119,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
 
                 setResultTextView(this.resultNumber);
             } catch (Exception e) {
+                Log.w("CalcApp", "(Operation error) Cannot calculate with: " + firstNumber + ", " + secondNumber);
                 Toast.makeText(getApplicationContext(),
                         "Error to calculate",
                         Toast.LENGTH_LONG).show();
@@ -130,7 +182,11 @@ public class MainActivity extends AppCompatActivity {
         setSecondNumber(resultNumber);
     }
 
+    /**
+     * Clear value of firstNumber, secondNumber and operation
+     */
     private void clearNumbersAndOperation() {
+        Log.i("CalcApp", "Clear textview number");
         firstNumber = "";
         secondNumber = "";
         operation = null;
